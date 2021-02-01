@@ -4,7 +4,7 @@ version: '3.2'
 
 services:
   appserver:
-    image: cas:latest
+    image: bcv-cas:latest
     container_name: cas
     ports:
       - 8009:8009
