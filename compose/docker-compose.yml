@@ -1,10 +1,10 @@
-# More-elaborate example compose file for CAS management image.
+# More-elaborate example compose file for the CAS image.
 # In fact, not many parameters are mandatory - see README.md.
 version: '3.2'
 
 services:
   appserver:
-    image: bcv-cas:latest
+    image: bcv-cas:6.2.7-r0
     container_name: cas
     ports:
       - 8009:8009
@@ -17,9 +17,31 @@ services:
       - DOCKER_TOMCAT_ENABLE_AJP=
 #      - DOCKER_TOMCAT_DISABLE_ACCESS_LOG=
       - DOCKER_SECURE_SECRETS=yes
+      - CAS_SERVER_NAME=
+      - CAS_SERVER_PREFIX=
+      # - CAS_SERVICES_REGISTRY_INIT_FROM_JSON=true
+      # - CAS_SERVICES_REGISTRY_JSON_LOCATION=file:/conf/cas/services
+      # - CAS_LDAP_0_TYPE=DIRECT
+      # - CAS_LDAP_0_LDAP_URL=ldap://openldap:389
+      # - CAS_LDAP_0_USE_SSL=false
+      # - CAS_LDAP_0_SUBTREE_SEARCH=true
+      # - CAS_LDAP_0_BASE_DN=ou=users,dc=iam,dc=cz
+      # - CAS_LDAP_0_SEARCH_FILTER=cn={user}
+      # - CAS_LDAP_0_BIND_DN=cn=admin,dc=iam,dc=cz
+      # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap.pwfile
+      # - CAS_LDAP_0_DN_FORMAT=cn=%s,ou=users,dc=iam,dc=cz
+      - CAS_IDM_LOCATION=
+      - CAS_CONFIG=/etc/cas/config
     volumes:
 # This is for binding folder with PEM certificates to import into truststore.
       - type: bind
         source: ./certs
         target: /casstart/trustcert
         read_only: true
+      - type: bind
+        source: ./ldap.pwfile
+        target: /run/secrets/ldap.pwfile
+        read_only: true
+      - 'cas_services:/conf/cas/services'
+volumes:
+  cas_services:
