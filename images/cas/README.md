@@ -63,7 +63,7 @@ If you need more to set more properties that defined here, they must be added to
 is to mount the cas.properties file to /etc/cas/config/cas.properties.
 - **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., 'https://company.com', property in cas.properties 'cas.server.name'. **Default: not set**.
 - **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., 'https://company.com/cas', property in cas.properties 'cas.server.prefix'. **Default: '${cas.server.name}/cas'**.
-- **CAS_SERVICES_REGISTRY_JSON_LOCATION** - The location of the JSON services definitions, property in cas.properties 'cas.service-registry.json.location'. **Default: 'file:/conf/cas/services'**.
+- **CAS_SERVICES_REGISTRY_JSON_LOCATION** - The location of the JSON services definitions, property in cas.properties 'cas.service-registry.json.location'. **Default: '/conf/cas/services'**.
 
 ### LDAP configuration
 LDAP is used as the source of data about users by CAS. By default, all properties related to it are not set (commented out) because CAS **will not start if LDAP is defined but unavailable**. 
@@ -86,7 +86,7 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 
 ### Custom frontend changes
 - **CAS_CUSTOM_FRONTEND** - Set whether custom BCV frontend design should be used, property in cas.properties 'cas.custom.frontend.iam'. **Default: 'false'**.
-- **CAS_CUSTOM_FRONTEND_TITLE** - Set the title of the CAS login page, use Unicode to write special characters, property in cas.properties 'cas.custom.frontend.title'. **Default: 'IAM Centr\u00E1ln\u00ED login'**.
+- **CAS_CUSTOM_FRONTEND_TITLE** - Set the title of the CAS login page, use Unicode to write special characters, e. g., "Centr\\u00E1ln\\u00ED login" for "Centrální login". Notice that backslashes must be escaped. Property in cas.properties 'cas.custom.frontend.title'. **Default: 'IAM Centr\u00E1ln\u00ED login'**.
 - **CAS_CUSTOM_FRONTEND_FOOTER_TEXT** - Set the text shown in the footer, property in cas.properties 'cas.custom.frontend.footer-text'. **Default: 'not set'**.
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINK** - Set the URL of the link shown in the footer, property in cas.properties 'cas.custom.frontend.footer-link'. **Default: 'https://www.bcvsolutions.eu'**.
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT** - Set the text of the link shown in the footer, property in cas.properties 'cas.custom.frontend.footer-linktext'. **Default: 'BCV solutions'**.

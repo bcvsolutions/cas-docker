@@ -19,8 +19,7 @@ services:
       - DOCKER_SECURE_SECRETS=yes
       - CAS_SERVER_NAME=
       - CAS_SERVER_PREFIX=
-      # - CAS_SERVICES_REGISTRY_INIT_FROM_JSON=true
-      # - CAS_SERVICES_REGISTRY_JSON_LOCATION=file:/conf/cas/services
+      # - CAS_SERVICES_REGISTRY_JSON_LOCATION=/conf/cas/services
       # - CAS_LDAP_0_TYPE=DIRECT
       # - CAS_LDAP_0_LDAP_URL=ldap://openldap:389
       # - CAS_LDAP_0_USE_SSL=false

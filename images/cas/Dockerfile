@@ -1,11 +1,10 @@
 FROM bcv-tomcat:9.0.41-r0
 
-ENV CAS_VERSION 6.2.1
 ENV TOMCAT_BASE /opt/tomcat/current
 ENV CAS_BASE /etc/cas
 ENV CAS_CONFIG /etc/cas/config
 ENV CAS_SAML /etc/cas/saml
-ENV CAS_START /casstart
+ENV CAS_START /casstart/
 
 # install sw and link it where necessary
 RUN yum install -y krb5-workstation krb5-libs krb5-auth-dialog xmlstarlet openssl dos2unix which && \
@@ -28,8 +27,8 @@ RUN cd $TOMCAT_BASE/conf && \
 # We just copy the war into the container here.
 COPY dropin/cas.war $TOMCAT_BASE/webapps
 
-# copy the configuration template
-COPY dropin/cas.TPL.properties $CAS_START/
+# Copy configuration template and services definition
+COPY "dropin/cas.TPL.properties" "dropin/idm-200.json" "dropin/casmngt-201.json" "$CAS_START"
 
 # finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
 COPY runscripts "$RUNSCRIPTS_PATH/"

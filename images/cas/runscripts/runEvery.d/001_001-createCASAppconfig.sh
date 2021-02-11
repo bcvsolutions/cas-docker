@@ -25,9 +25,9 @@ else
 fi
 
 if [ -z "${CAS_SERVICES_REGISTRY_JSON_LOCATION}" ]; then
-  echo "[$0] CAS_SERVICES_REGISTRY_JSON_LOCATION not set, using default from the template 'file:/conf/cas/services'.";
+  echo "[$0] CAS_SERVICES_REGISTRY_JSON_LOCATION not set, using default from the template '/conf/cas/services'.";
 else
-  sed -i "s#.*cas.service-registry.json.location=.*#cas.service-registry.json.location=$CAS_SERVICES_REGISTRY_JSON_LOCATION#" cas.properties;
+  sed -i "s#.*cas.service-registry.json.location=.*#cas.service-registry.json.location=file:$CAS_SERVICES_REGISTRY_JSON_LOCATION#" cas.properties;
 fi
 
 # LDAP[0] CONFIG
@@ -158,6 +158,6 @@ else
   sed -i "s#.*cas.authn.spnego.send401-on-authentication-failure=.*#cas.authn.spnego.send401-on-authentication-failure=true#" cas.properties;
   sed -i "s#.*cas.authn.spnego.principal-with-domain-name=.*#cas.authn.spnego.principal-with-domain-name=false#" cas.properties;
   sed -i "s#.*cas.authn.spnego.ntlm=.*#cas.authn.spnego.ntlm=false#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.system.kerberos-conf=.*#cas.authn.spnego.system.kerberos-conf=/etc/cas/config/krb5.conf#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.system.login-conf=.*#cas.authn.spnego.system.login-conf=/etc/cas/config/login.conf#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.system.kerberos-conf=.*#cas.authn.spnego.system.kerberos-conf=file:/etc/cas/config/krb5.conf#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.system.login-conf=.*#cas.authn.spnego.system.login-conf=file:/etc/cas/config/login.conf#" cas.properties;
 fi
