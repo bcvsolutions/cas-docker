@@ -1,9 +1,9 @@
 FROM bcv-tomcat:9.0.41-r0
 
-ENV TOMCAT_BASE /opt/tomcat/current
-ENV CAS_BASE /etc/cas
-ENV CAS_CONFIG /etc/cas/config
-ENV CAS_SAML /etc/cas/saml
+ENV TOMCAT_BASE /opt/tomcat/current/
+ENV CAS_BASE /etc/cas/
+ENV CAS_CONFIG /etc/cas/config/
+ENV CAS_SAML /etc/cas/saml/
 ENV CAS_START /casstart/
 
 # install sw and link it where necessary
@@ -27,29 +27,21 @@ RUN cd $TOMCAT_BASE/conf && \
 # We just copy the war into the container here.
 COPY dropin/cas.war $TOMCAT_BASE/webapps
 
-# Copy configuration template and services definition
+# Copy CAS configuration template and default services definition
 COPY "dropin/cas.TPL.properties" "dropin/idm-200.json" "dropin/casmngt-201.json" "dropin/jwk-gen.jar" "$CAS_START"
 
 # finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
 COPY runscripts "$RUNSCRIPTS_PATH/"
 RUN find "$RUNSCRIPTS_PATH/" -name "*.sh" -exec chmod -v u+x {} \;
 
-# create CAS config & data structures
+# create CAS and Tomcat config & data structures
 RUN mkdir -pv $CAS_CONFIG && \
 		chmod -v 750 $CAS_CONFIG && \
-		chgrp -Rv tomcat $CAS_CONFIG
-
-# create CAS SAML config & data structures
-RUN mkdir -pv $CAS_SAML && \
+		chown -R tomcat $CAS_CONFIG && \
+		mkdir -pv $CAS_SAML && \
 		chmod -v 750 $CAS_SAML && \
-		chgrp -Rv tomcat $CAS_SAML
-
-# change the owner of files to tomcat so that it can create its files
-RUN cd $CAS_BASE && \
-		chown -R tomcat $CAS_SAML
-
-# change the owner of files to tomcat so that it can create its files
-RUN cd $TOMCAT_BASE && \
+		chown -R tomcat $CAS_SAML && \
+		cd $TOMCAT_BASE && \
 		chown -R tomcat webapps/ work/ temp/ logs/
 
 CMD ["/bin/bash","-c","$RUNSCRIPTS_PATH/run.sh"]
