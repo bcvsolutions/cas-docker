@@ -7,7 +7,7 @@ ENV CAS_SAML /etc/cas/saml
 ENV CAS_START /casstart/
 
 # install sw and link it where necessary
-RUN yum install -y krb5-workstation krb5-libs krb5-auth-dialog xmlstarlet openssl dos2unix which && \
+RUN yum install -y krb5-workstation krb5-libs krb5-auth-dialog xmlstarlet openssl dos2unix jq which && \
 		yum clean all
 
 # harden tomcat config and clean tomcat-bundled webapps
@@ -28,7 +28,7 @@ RUN cd $TOMCAT_BASE/conf && \
 COPY dropin/cas.war $TOMCAT_BASE/webapps
 
 # Copy configuration template and services definition
-COPY "dropin/cas.TPL.properties" "dropin/idm-200.json" "dropin/casmngt-201.json" "$CAS_START"
+COPY "dropin/cas.TPL.properties" "dropin/idm-200.json" "dropin/casmngt-201.json" "dropin/jwk-gen.jar" "$CAS_START"
 
 # finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
 COPY runscripts "$RUNSCRIPTS_PATH/"
