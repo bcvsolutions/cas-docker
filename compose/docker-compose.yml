@@ -33,10 +33,11 @@ services:
       - CAS_CONFIG=/etc/cas/config
     volumes:
 # This is for binding folder with PEM certificates to import into truststore.
-      - type: bind
-        source: ./certs
-        target: /casstart/trustcert
-        read_only: true
+# It comes from bcv-tomcat baseimage.
+#      - type: bind
+#        source: ./certs
+#        target: /opt/tomcat/truststore/certs
+#        read_only: true
       - type: bind
         source: ./ldap.pwfile
         target: /run/secrets/ldap.pwfile

@@ -1,9 +1,0 @@
-{
-  "@class" : "org.apereo.cas.services.RegexRegisteredService",
-  "serviceId" : "https?://.+/idm.+",
-  "name" : "IdM",
-  "id" : 200,
-  "evaluationOrder" : 1,
-  "logoutType" : "BACK_CHANNEL",
-  "logoutUrl" : "placeholderLogoutUrl" 
-}

@@ -18,11 +18,11 @@ chown tomcat:tomcat /etc/cas/config/file.keytab
 chmod 600 /etc/cas/config/file.keytab
 
 echo "[$0] Copying the login.conf file...";
-cp file.keytab /etc/cas/config/login.conf
+cp login.conf /etc/cas/config/login.conf
 chown tomcat:tomcat /etc/cas/config/login.conf
 
 echo "[$0] Copying the krb5.conf file...";
-cp file.keytab /etc/krb5.conf
+cp krb5.conf /etc/krb5.conf
 chown tomcat:tomcat /etc/krb5.conf
 
 

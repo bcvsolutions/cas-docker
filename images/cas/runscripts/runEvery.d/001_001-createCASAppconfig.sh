@@ -8,7 +8,7 @@ fi
 
 cd "$CAS_CONFIG";
 
-cp "/casstart/cas.TPL.properties" cas.properties;
+cp "$CAS_START/cas.TPL.properties" cas.properties;
 
 # Take variables that were set and (re)place them in the config file.
 
@@ -154,48 +154,37 @@ else
 fi
 
 # AD SSO CONFIG
-# TODO
 
 if [[ "$CAS_SPNEGO_ENABLED" != "true" ]]; then
   echo "[$0] CAS_SPNEGO_ENABLED not set to true, using default from the template (DISABLED).";
 else
-  sed -i "s#.*cas.authn.spnego.mixed-mode-authentication=.*#cas.authn.spnego.mixed-mode-authentication=true#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.supported-browsers=.*#cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.send401-on-authentication-failure=.*#cas.authn.spnego.send401-on-authentication-failure=true#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.ntlm-allowed=.*#cas.authn.spnego.ntlm-allowed=false#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.ntlm=.*#cas.authn.spnego.ntlm=false#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.name=.*#cas.authn.spnego.name=AD_SPNEGO#" cas.properties;
+cat << EOF >> cas.properties
 
-  sed -i "s#.*cas.authn.spnego.system.kerberos-conf=.*#cas.authn.spnego.system.kerberos-conf=file:/etc/krb5.conf#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.system.login-conf=.*#cas.authn.spnego.system.login-conf=file:/etc/cas/config/login.conf#" cas.properties;
-  if [ -z "${CAS_KERBEROS_REALM}" ]; then
-    echo "[$0] CAS_KERBEROS_REALM not set, using default from the template - EMTPY!!!";
-  else
-    sed -i "s#.*cas.authn.spnego.system.kerberos-realm=.*#cas.authn.spnego.system.kerberos-realm=$CAS_KERBEROS_REALM#" cas.properties;
-  fi
-  if [ -z "${CAS_KERBEROS_DEBUG}" ]; then
-    echo "[$0] CAS_KERBEROS_DEBUG not set, using default from the template - false";
-    sed -i "s#.*cas.authn.spnego.system.kerberos-debug=.*#cas.authn.spnego.system.kerberos-debug=false#" cas.properties;
-  else
-    sed -i "s#.*cas.authn.spnego.system.kerberos-debug=.*#cas.authn.spnego.system.kerberos-debug=$CAS_KERBEROS_DEBUG#" cas.properties;
-  fi
-  sed -i "s#.*cas.authn.spnego.system.use-subject-creds-only=.*#cas.authn.spnego.system.use-subject-creds-only=true#" cas.properties;
-  if [ -z "${CAS_KERBEROS_KDC}" ]; then
-    echo "[$0] CAS_KERBEROS_KDC not set, using default from the template - EMPTY!!!";
-  else
-    sed -i "s#.*cas.authn.spnego.system.kerberos-kdc=.*#cas.authn.spnego.system.kerberos-kdc=$CAS_KERBEROS_KDC#" cas.properties;
-  fi
 
-  sed -i "s#.*cas.authn.spnego.host-name-client-action-strategy=.*#cas.authn.spnego.host-name-client-action-strategy=hostnameSpnegoClientAction#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.alternative-remote-host-attribute=.*#cas.authn.spnego.alternative-remote-host-attribute=alternateRemoteHeader#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.ips-to-check-pattern=.*#cas.authn.spnego.ips-to-check-pattern=\.\+#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.host-name-pattern-string=.*#cas.authn.spnego.host-name-pattern-string=\.\+#" cas.properties;
-  sed -i "s#.*cas.webflow.autoconfigure=.*#cas.webflow.autoconfigure=true#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.properties\[0\].cache-policy=.*#cas.authn.spnego.properties\[0\].cache-policy=600#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.properties\[0\].timeout=.*#cas.authn.spnego.properties\[0\].timeout=300000#" cas.properties;
-  if [ -z "${CAS_KERBEROS_SERVICE_PRINCIPLE}" ]; then
-    echo "[$0] CAS_KERBEROS_SERVICE_PRINCIPLE not set, using default from the template - EMPTY!!!";
-  else
-    sed -i "s#.*cas.authn.spnego.properties\[0\].jcifs-service-principal=.*#cas.authn.spnego.properties\[0\].jcifs-service-principal=$CAS_KERBEROS_SERVICE_PRINCIPLE#" cas.properties;
-  fi
+### SPNEGO CONFIGURATION
+
+# needed to allow local sign in if SSO is not available
+cas.authn.spnego.mixed-mode-authentication=true
+cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit,curl
+cas.authn.spnego.send401-on-authentication-failure=true
+cas.authn.spnego.ntlm-allowed=false
+cas.authn.spnego.ntlm=false
+cas.authn.spnego.name=AD_SPNEGO
+
+cas.authn.spnego.system.kerberos-conf=file:/etc/krb5.conf
+cas.authn.spnego.system.login-conf=file:/etc/cas/config/login.conf
+cas.authn.spnego.system.kerberos-realm=$CAS_KERBEROS_REALM
+cas.authn.spnego.system.kerberos-debug=false
+cas.authn.spnego.system.use-subject-creds-only=true
+cas.authn.spnego.system.kerberos-kdc=$CAS_KERBEROS_KDC
+
+cas.authn.spnego.host-name-client-action-strategy=hostnameSpnegoClientAction
+cas.authn.spnego.alternative-remote-host-attribute=alternateRemoteHeader
+cas.authn.spnego.ips-to-check-pattern=.+
+cas.authn.spnego.host-name-pattern-string=.+
+cas.webflow.autoconfigure=true
+cas.authn.spnego.properties[0].cache-policy=600
+cas.authn.spnego.properties[0].timeout=300000
+cas.authn.spnego.properties[0].jcifs-service-principal=$CAS_KERBEROS_SERVICE_PRINCIPAL
+EOF
 fi
