@@ -93,7 +93,11 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_CUSTOM_FRONTEND_LOGO_LINK** - Set the URL of the logo, property in cas.properties 'cas.custom.frontend.logolink'. **Default: 'https://www.bcvsolutions.eu'**.
 
 ### SPNEGO authentication
-TODO
+- **CAS_SPNEGO_ENABLED** - Set SPNEGO should be enabled. This will set some static properties necessary for SPNEGO to work. **Default: 'false'**.
+- **CAS_KERBEROS_REALM** - Set the Kerberos realm, property in cas.properties 'cas.authn.spnego.system.kerberos-realm'. **Default: 'not set'**.
+- **CAS_KERBEROS_DEBUG** - Enable Kerberos debug mode, property in cas.properties 'cas.authn.spnego.system.kerberos-debug'. **Default: 'false'**.
+- **CAS_KERBEROS_KDC** - Set the Kerberos KDC URL, property in cas.properties 'cas.authn.spnego.system.kerberos-kdc'. **Default: 'not set'**.
+- **CAS_KERBEROS_SERVICE_PRINCIPLE** - Set the Kerberos service principle name, property in cas.properties 'cas.authn.spnego.properties[0].jcifs-service-principal'. **Default: 'not set'**.
 
 ## Mounted files and volumes
 - Optional

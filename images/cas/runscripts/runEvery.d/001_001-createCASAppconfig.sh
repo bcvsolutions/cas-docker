@@ -41,12 +41,14 @@ if [ -z "${CAS_LDAP_0_LDAP_URL}" ]; then
   echo "[$0] CAS_LDAP_0_LDAP_URL not set, using default from the template - EMPTY!!!.";
 else
   sed -i "s#.*cas.authn.ldap\[0\].ldapUrl=.*#cas.authn.ldap\[0\].ldapUrl=$CAS_LDAP_0_LDAP_URL#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].ldapUrl=.*#cas.authn.attribute-repository.ldap\[0\].ldapUrl=$CAS_LDAP_0_LDAP_URL#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_USE_SSL}" ]; then
-  echo "[$0] CAS_LDAP_0_USE_SSL not set, using default from the template - EMPTY!!!.";
+  echo "[$0] CAS_LDAP_0_USE_SSL not set, using default from the template - false.";
 else
   sed -i "s#.*cas.authn.ldap\[0\].usessl=.*#cas.authn.ldap\[0\].usessl=$CAS_LDAP_0_USE_SSL#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].useSsl=.*#cas.authn.attribute-repository.ldap\[0\].useSsl=$CAS_LDAP_0_USE_SSL#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_SUBTREE_SEARCH}" ]; then
@@ -59,18 +61,21 @@ if [ -z "${CAS_LDAP_0_BASE_DN}" ]; then
   echo "[$0] CAS_LDAP_0_BASE_DN not set, using default from the template - EMPTY!!!.";
 else
   sed -i "s#.*cas.authn.ldap\[0\].baseDn=.*#cas.authn.ldap\[0\].baseDn=$CAS_LDAP_0_BASE_DN#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].baseDn=.*#cas.authn.attribute-repository.ldap\[0\].baseDn=$CAS_LDAP_0_BASE_DN#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_SEARCH_FILTER}" ]; then
   echo "[$0] CAS_LDAP_0_SEARCH_FILTER not set, using default from the template - EMPTY!!!.";
 else
   sed -i "s#.*cas.authn.ldap\[0\].searchFilter=.*#cas.authn.ldap\[0\].searchFilter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].searchFilter=.*#cas.authn.attribute-repository.ldap\[0\].searchFilter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_BIND_DN}" ]; then
   echo "[$0] CAS_LDAP_0_BIND_DN not set, using default from the template - EMPTY!!!.";
 else
   sed -i "s#.*cas.authn.ldap\[0\].bindDn=.*#cas.authn.ldap\[0\].bindDn=$CAS_LDAP_0_BIND_DN#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].bindDn=.*#cas.authn.attribute-repository.ldap\[0\].bindDn=$CAS_LDAP_0_BIND_DN#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE}" ]; then
@@ -79,6 +84,7 @@ else
   if [ -f "${CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE}" ]; then
     ldappass=$(cat "$CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE");
     sed -i "s#.*cas.authn.ldap\[0\].bindCredential=.*#cas.authn.ldap\[0\].bindCredential=$ldappass#" cas.properties;
+    sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].bindCredential=.*#cas.authn.attribute-repository.ldap\[0\].bindCredential=$ldappass#" cas.properties;
   else
     echo "[$0] CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE not readable, using default password from the template - EMPTY!!!.";
   fi
@@ -150,14 +156,46 @@ fi
 # AD SSO CONFIG
 # TODO
 
-if [ -z "${CAS_SPNEGO_ENABLED}" ]; then
-  echo "[$0] CAS_SPNEGO_ENABLED not set, using default from the template (DISABLED).";
+if [[ "$CAS_SPNEGO_ENABLED" != "true" ]]; then
+  echo "[$0] CAS_SPNEGO_ENABLED not set to true, using default from the template (DISABLED).";
 else
   sed -i "s#.*cas.authn.spnego.mixed-mode-authentication=.*#cas.authn.spnego.mixed-mode-authentication=true#" cas.properties;
   sed -i "s#.*cas.authn.spnego.supported-browsers=.*#cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit#" cas.properties;
   sed -i "s#.*cas.authn.spnego.send401-on-authentication-failure=.*#cas.authn.spnego.send401-on-authentication-failure=true#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.principal-with-domain-name=.*#cas.authn.spnego.principal-with-domain-name=false#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.ntlm-allowed=.*#cas.authn.spnego.ntlm-allowed=false#" cas.properties;
   sed -i "s#.*cas.authn.spnego.ntlm=.*#cas.authn.spnego.ntlm=false#" cas.properties;
-  sed -i "s#.*cas.authn.spnego.system.kerberos-conf=.*#cas.authn.spnego.system.kerberos-conf=file:/etc/cas/config/krb5.conf#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.name=.*#cas.authn.spnego.name=AD_SPNEGO#" cas.properties;
+
+  sed -i "s#.*cas.authn.spnego.system.kerberos-conf=.*#cas.authn.spnego.system.kerberos-conf=file:/etc/krb5.conf#" cas.properties;
   sed -i "s#.*cas.authn.spnego.system.login-conf=.*#cas.authn.spnego.system.login-conf=file:/etc/cas/config/login.conf#" cas.properties;
+  if [ -z "${CAS_KERBEROS_REALM}" ]; then
+    echo "[$0] CAS_KERBEROS_REALM not set, using default from the template - EMTPY!!!";
+  else
+    sed -i "s#.*cas.authn.spnego.system.kerberos-realm=.*#cas.authn.spnego.system.kerberos-realm=$CAS_KERBEROS_REALM#" cas.properties;
+  fi
+  if [ -z "${CAS_KERBEROS_DEBUG}" ]; then
+    echo "[$0] CAS_KERBEROS_DEBUG not set, using default from the template - false";
+    sed -i "s#.*cas.authn.spnego.system.kerberos-debug=.*#cas.authn.spnego.system.kerberos-debug=false#" cas.properties;
+  else
+    sed -i "s#.*cas.authn.spnego.system.kerberos-debug=.*#cas.authn.spnego.system.kerberos-debug=$CAS_KERBEROS_DEBUG#" cas.properties;
+  fi
+  sed -i "s#.*cas.authn.spnego.system.use-subject-creds-only=.*#cas.authn.spnego.system.use-subject-creds-only=true#" cas.properties;
+  if [ -z "${CAS_KERBEROS_KDC}" ]; then
+    echo "[$0] CAS_KERBEROS_KDC not set, using default from the template - EMPTY!!!";
+  else
+    sed -i "s#.*cas.authn.spnego.system.kerberos-kdc=.*#cas.authn.spnego.system.kerberos-kdc=$CAS_KERBEROS_KDC#" cas.properties;
+  fi
+
+  sed -i "s#.*cas.authn.spnego.host-name-client-action-strategy=.*#cas.authn.spnego.host-name-client-action-strategy=hostnameSpnegoClientAction#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.alternative-remote-host-attribute=.*#cas.authn.spnego.alternative-remote-host-attribute=alternateRemoteHeader#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.ips-to-check-pattern=.*#cas.authn.spnego.ips-to-check-pattern=\.\+#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.host-name-pattern-string=.*#cas.authn.spnego.host-name-pattern-string=\.\+#" cas.properties;
+  sed -i "s#.*cas.webflow.autoconfigure=.*#cas.webflow.autoconfigure=true#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.properties\[0\].cache-policy=.*#cas.authn.spnego.properties\[0\].cache-policy=600#" cas.properties;
+  sed -i "s#.*cas.authn.spnego.properties\[0\].timeout=.*#cas.authn.spnego.properties\[0\].timeout=300000#" cas.properties;
+  if [ -z "${CAS_KERBEROS_SERVICE_PRINCIPLE}" ]; then
+    echo "[$0] CAS_KERBEROS_SERVICE_PRINCIPLE not set, using default from the template - EMPTY!!!";
+  else
+    sed -i "s#.*cas.authn.spnego.properties\[0\].jcifs-service-principal=.*#cas.authn.spnego.properties\[0\].jcifs-service-principal=$CAS_KERBEROS_SERVICE_PRINCIPLE#" cas.properties;
+  fi
 fi
