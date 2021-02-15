@@ -52,6 +52,8 @@ CAS image adds its own scripts there:
 - **runEvery.d/001_000-generateTruststore.sh** - This script was superseded by similar baseimage functionality.
 - **runEvery.d/001_001-createCASAppconfig.sh** - Creates the cas.properties file which defines CAS behavior.
 - **runEvery.d/001_002-copyCASServiceDefinitions.sh** - Copies the default services for CAS.
+- **runEvery.d/001_003-generateKeys.sh** - Generates the signing and encryption keys used by CAS.
+- **runEvery.d/001_004-copySPNEGOFiles.sh** - Copies the SPNEGO files (config and keytab).
 
 ## Container shutdown
 See Tomcat baseimage doc. CAS is very swift when shutting down, the default STOP_TIMEOUT should be more than enough.
@@ -78,7 +80,7 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE** - The name of the file containing the password for the user account defined above, property in cas.properties 'cas.authn.ldap[0].bindCredential'. Use 'ldap.pwfile' and mount this file. **Default: 'not set'**.
 - **CAS_LDAP_0_DN_FORMAT** - Define the DN format, property in cas.properties 'cas.authn.ldap[0].dn-format'. Recommended: 'cn=%s,ou=users,dc=iam,dc=cz'. **Default: 'not set'**.
 
-### CAS client configuration for IdM
+### CAS client configuration for CzechIdM
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties 'cas.client.validator-type'. **Default: 'CAS30'**.
 - **CAS_TICKET_NUMBER_OF_USES** - Set the ticket expiration policy, property in cas.properties 'cas.ticket.st.number-of-uses'. **Default: '25'**.
 - **CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS** - Allow logout redirects defined in services, property in cas.properties 'cas.logout.follow-service-redirects'. **Default: 'true'**.
@@ -131,39 +133,17 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
       volumes:
         - 'cas_services:/conf/cas/services'
       ```
-  - AD keytab
-    - If you want to use SPNEGO authentication (SSO with MS AD), you need to supply a generated keytab file. 
+
+  - SPNEGO configuration files and the keytab
+    - If you want to use SPNEGO authentication (SSO with MS AD), you need to supply a folder which contains the generated keytab file (file.keytab), the krb5.conf file and the login.conf file. 
     - Example
       ```yaml
       volumes:
         - type: bind
-          source: ./spnego/file.keytab
-          target: /etc/cas/config/file.keytab
+          source: ./spnego
+          target: /casstart/spnego
           read_only: true
       ```
-
-  - krb5.conf
-    - If you want to use SPNEGO authentication (SSO with MS AD), you need to supply a the krb5.conf file. 
-    - Example
-      ```yaml
-      volumes:
-        - type: bind
-          source: ./spnego/krb5.conf
-          target: /etc/cas/config/krb5.conf
-          read_only: true
-      ```
-
-  - login.conf
-    - If you want to use SPNEGO authentication (SSO with MS AD), you need to supply a the login.conf file. 
-    - Example
-      ```yaml
-      volumes:
-        - type: bind
-          source: ./spnego/login.conf
-          target: /etc/cas/config/login.conf
-          read_only: true
-      ```
-
 ## Forbidden variables
 The same variables as for Tomcat baseimage.
 
