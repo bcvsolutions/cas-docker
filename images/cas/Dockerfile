@@ -27,8 +27,8 @@ RUN cd $TOMCAT_BASE/conf && \
 # We just copy the war into the container here.
 COPY dropin/cas.war $TOMCAT_BASE/webapps
 
-# Copy CAS configuration template and default services definition
-COPY "dropin/cas.TPL.properties" "dropin/idm-200.json" "dropin/casmngt-201.json" "dropin/jwk-gen.jar" "$CAS_START"
+# Copy CAS configuration template and tools
+COPY "dropin/cas.TPL.properties" "dropin/jwk-gen.jar" "$CAS_START"
 
 # finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
 COPY runscripts "$RUNSCRIPTS_PATH/"
