@@ -154,7 +154,10 @@ else
 fi
 
 # AD SSO CONFIG
-
+if [ -z "${CAS_KERBEROS_DEBUG}" ]; then
+  # if no kerberos debug var is set, set it to false
+  CAS_KERBEROS_DEBUG="false";
+fi
 if [[ "$CAS_SPNEGO_ENABLED" != "true" ]]; then
   echo "[$0] CAS_SPNEGO_ENABLED not set to true, using default from the template (DISABLED).";
 else
@@ -164,16 +167,16 @@ cat << EOF >> cas.properties
 ### SPNEGO CONFIGURATION
 
 # needed to allow local sign in if SSO is not available
-cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit,curl
+cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit
 cas.authn.spnego.send401-on-authentication-failure=true
 cas.authn.spnego.ntlm-allowed=false
 cas.authn.spnego.ntlm=false
-cas.authn.spnego.name=AD_SPNEGO
+cas.authn.spnego.name=KERBEROS_SPNEGO
 
 cas.authn.spnego.system.kerberos-conf=file:/etc/krb5.conf
 cas.authn.spnego.system.login-conf=file:/etc/cas/config/login.conf
 cas.authn.spnego.system.kerberos-realm=$CAS_KERBEROS_REALM
-cas.authn.spnego.system.kerberos-debug=false
+cas.authn.spnego.system.kerberos-debug=$CAS_KERBEROS_DEBUG
 cas.authn.spnego.system.use-subject-creds-only=true
 cas.authn.spnego.system.kerberos-kdc=$CAS_KERBEROS_KDC
 

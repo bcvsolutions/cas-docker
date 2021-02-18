@@ -1,5 +1,7 @@
 FROM bcv-tomcat:9.0.41-r0
 
+ENV CAS_VERSION 6.2.8.0
+
 ENV TOMCAT_BASE /opt/tomcat/current/
 ENV CAS_BASE /etc/cas/
 ENV CAS_CONFIG /etc/cas/config/
@@ -24,16 +26,6 @@ RUN cd $TOMCAT_BASE/conf && \
 		rm -rf $TOMCAT_BASE/webapps/{examples,docs,ROOT,host-manager,manager} && \
 		chown root:root -v $TOMCAT_BASE/webapps
 
-# We just copy the war into the container here.
-COPY dropin/cas.war $TOMCAT_BASE/webapps
-
-# Copy CAS configuration template and tools
-COPY "dropin/cas.TPL.properties" "dropin/jwk-gen.jar" "$CAS_START"
-
-# finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
-COPY runscripts "$RUNSCRIPTS_PATH/"
-RUN find "$RUNSCRIPTS_PATH/" -name "*.sh" -exec chmod -v u+x {} \;
-
 # create CAS and Tomcat config & data structures
 RUN mkdir -pv $CAS_CONFIG && \
 		chmod -v 750 $CAS_CONFIG && \
@@ -43,6 +35,16 @@ RUN mkdir -pv $CAS_CONFIG && \
 		chown -R tomcat $CAS_SAML && \
 		cd $TOMCAT_BASE && \
 		chown -R tomcat webapps/ work/ temp/ logs/
+
+# We just copy the war into the container here.
+COPY "dropin/cas-$CAS_VERSION.war" "$TOMCAT_BASE/webapps/cas.war"
+
+# Copy CAS configuration template and tools
+COPY "dropin/cas.TPL.properties" "dropin/jwk-gen.jar" "$CAS_START"
+
+# finally, copy over the runscripts; this adds our runscripts to the Tomcat baseimage
+COPY runscripts "$RUNSCRIPTS_PATH/"
+RUN find "$RUNSCRIPTS_PATH/" -name "*.sh" -exec chmod -v u+x {} \;
 
 CMD ["/bin/bash","-c","$RUNSCRIPTS_PATH/run.sh"]
 
