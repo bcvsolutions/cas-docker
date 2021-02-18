@@ -82,7 +82,7 @@ if [ -z "${CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE}" ]; then
   echo "[$0] CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE not set, using default from the template - EMPTY!!!.";
 else
   if [ -f "${CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE}" ]; then
-    ldappass=$(cat "$CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE");
+    ldappass=$(grep -o '".*"' "$CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE" | sed 's/"//g');
     sed -i "s#.*cas.authn.ldap\[0\].bindCredential=.*#cas.authn.ldap\[0\].bindCredential=$ldappass#" cas.properties;
     sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].bindCredential=.*#cas.authn.attribute-repository.ldap\[0\].bindCredential=$ldappass#" cas.properties;
   else
