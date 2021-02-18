@@ -31,7 +31,6 @@ services:
       # - CAS_LDAP_0_BIND_DN=cn=cn=cas,dc=iamappliance
       # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap_cas.yaml
       # - CAS_LDAP_0_DN_FORMAT=cn=%s,ou=users,dc=iam,dc=cz
-      # - CAS_IDM_LOCATION=
       # - CAS_CONFIG=/etc/cas/config
       # - CAS_CUSTOM_FRONTEND=true
       # - CAS_CUSTOM_FRONTEND_TITLE=

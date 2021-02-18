@@ -51,9 +51,8 @@ Container start leverages existing hooks infrastructure as provided by the Tomca
 CAS image adds its own scripts there:
 - **runEvery.d/001_000-generateTruststore.sh** - This script was superseded by similar baseimage functionality.
 - **runEvery.d/001_001-createCASAppconfig.sh** - Creates the cas.properties file which defines CAS behavior.
-- **runEvery.d/001_002-copyCASServiceDefinitions.sh** - Copies the default services for CAS.
-- **runEvery.d/001_003-generateKeys.sh** - Generates the signing and encryption keys used by CAS.
-- **runEvery.d/001_004-copySPNEGOFiles.sh** - Copies the SPNEGO files (config and keytab).
+- **runEvery.d/001_002-generateKeys.sh** - Generates the signing and encryption keys used by CAS.
+- **runEvery.d/001_003-copySPNEGOFiles.sh** - Copies the SPNEGO files (config and keytab).
 
 ## Container shutdown
 See Tomcat baseimage doc. CAS is very swift when shutting down, the default STOP_TIMEOUT should be more than enough.
@@ -84,7 +83,6 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties 'cas.client.validator-type'. **Default: 'CAS30'**.
 - **CAS_TICKET_NUMBER_OF_USES** - Set the ticket expiration policy, property in cas.properties 'cas.ticket.st.number-of-uses'. **Default: '25'**.
 - **CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS** - Allow logout redirects defined in services, property in cas.properties 'cas.logout.follow-service-redirects'. **Default: 'true'**.
-- **CAS_IDM_LOCATION** - This value is used to configure the default service definition for CzechIdM. **Default: 'not set'**.
 
 ### Custom frontend changes
 - **CAS_CUSTOM_FRONTEND** - Set whether custom BCV frontend design should be used, property in cas.properties 'cas.custom.frontend.iam'. **Default: 'false'**.
