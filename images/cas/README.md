@@ -5,22 +5,23 @@ You can find our Tomcat Docker image [here](https://github.com/bcvsolutions/tomc
 ## Image versioning
 This image is versioned by CAS version. The underlying Tomcat version is not mentioned since CAS is distributed as a whole application stack.
 
-Naming scheme is pretty simple: **bcv-cas:CAS_VERSION-rIMAGE_VERSION**.
+Naming scheme is pretty simple: **bcv-cas:CAS_BCV_RELEASE-rIMAGE_VERSION**.
 - Image name is **bcv-cas**.
-- **CAS_VERSION** is a version of CAS in the image.
+- **CAS_BCV_RELEASE** is a version of CAS released by BCV. The versioning of this is **CAS_VERSION.BCV_RELEASE**. 
 - **IMAGE_VERSION** is an image release version written as a serial number, starting at 0. When images have the same CAS versions but different image versions it means there were some changes in the image itself (setup scripts, etc.) but application itself did not change.
 
 Example
 ```
-bcv-cas:6.2.4-r0    // first release of CAS 6.2.4 image
-bcv-cas:6.2.4-r2    // third release of CAS 6.2.4 image
-bcv-cas:6.3.0-r0    // first release of CAS 6.3.0 image
+bcv-cas:6.2.4.0-r0    // first release of CAS 6.2.4 image
+bcv-cas:6.2.4.1-r2    // third release of CAS 6.2.4 image
+bcv-cas:6.3.0.0-r0    // first release of CAS 6.3.0 image
 bcv-cas:latest      // nightly build
 ```
 
 ## Building
 To build a new CAS image, put the application WAR archive into **dropin/cas.war**
 Then cd to the directory which contains the Dockerfile and issue `docker build --no-cache -t <image tag here> ./`.
+To make sure your WAR archive contains the correct version, you have to open it and navigate to /WEB-INF/lib/ and find cas-server-core-<your version>.jar
 
 The build process:
 1. Pulls **bcv-tomcat:some-version** image.
