@@ -12,9 +12,9 @@ Naming scheme is pretty simple: **bcv-cas:CAS_BCV_RELEASE-rIMAGE_VERSION**.
 
 Example
 ```
-bcv-cas:6.2.4.0-r0    // first release of CAS 6.2.4 image
-bcv-cas:6.2.4.1-r2    // third release of CAS 6.2.4 image
-bcv-cas:6.3.0.0-r0    // first release of CAS 6.3.0 image
+bcv-cas:6.2.8.0-r0    // first release of the first CAS BCV RELEASE with CAS version 6.2.8
+bcv-cas:6.2.8.1-r2    // third release of the second CAS BCV RELEASE with CAS version 6.2.8
+bcv-cas:6.3.0.0-r0    // first release of the first CAS BCV RELEASE with CAS version 6.3.0
 bcv-cas:latest      // nightly build
 ```
 
