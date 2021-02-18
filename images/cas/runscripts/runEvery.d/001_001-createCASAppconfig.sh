@@ -164,7 +164,6 @@ cat << EOF >> cas.properties
 ### SPNEGO CONFIGURATION
 
 # needed to allow local sign in if SSO is not available
-cas.authn.spnego.mixed-mode-authentication=true
 cas.authn.spnego.supported-browsers=MSIE,Trident,Firefox,AppleWebKit,curl
 cas.authn.spnego.send401-on-authentication-failure=true
 cas.authn.spnego.ntlm-allowed=false
