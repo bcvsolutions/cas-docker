@@ -44,8 +44,8 @@ After it is started up, you can navigate to http://yourserver:8080/cas. CAS itse
 
 ### Minimal mandatory parameters for deployments
 Those parameters have no defaults and when left unset, CAS will not start at all.
-- **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com`, property `cas.server.name` in `cas.properties`. **Default: not set**.
-- **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: not set**.
+- **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com` (without slash at the end), property `cas.server.name` in `cas.properties`. **Default: not set**.
+- **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: `$CAS_SERVER_NAME/cas`**.
 
 ## Container startup and hooks
 Container start leverages existing hooks infrastructure as provided by the Tomcat baseimage - **run.sh**, **runOnce.sh**, **runEvery.sh**, **startTomcat.sh** and their respective **.d/** directories. For more information about runscripts structure, see Tomcat baseimage doc.

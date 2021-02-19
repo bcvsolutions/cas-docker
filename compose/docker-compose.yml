@@ -19,18 +19,18 @@ services:
       # - DOCKER_TOMCAT_DISABLE_ACCESS_LOG=
       - DOCKER_SECURE_SECRETS=yes
       - CAS_SERVER_NAME=
-      - CAS_SERVER_PREFIX=
+      # - CAS_SERVER_PREFIX=
       - CAS_SERVICES_REGISTRY_INIT_FROM_JSON=true
-      - CAS_SERVICES_REGISTRY_JSON_LOCATION=/etc/cas/config/cas_services
+      # - CAS_SERVICES_REGISTRY_JSON_LOCATION=/conf/cas/services
       # - CAS_LDAP_0_TYPE=DIRECT
       # - CAS_LDAP_0_LDAP_URL=ldap://directory-server:389
       # - CAS_LDAP_0_USE_SSL=false
       # - CAS_LDAP_0_SUBTREE_SEARCH=true
       # - CAS_LDAP_0_BASE_DN=ou=users,dc=iamappliance
       # - CAS_LDAP_0_SEARCH_FILTER=uid={user}
-      # - CAS_LDAP_0_BIND_DN=cn=cn=cas,dc=iamappliance
+      # - CAS_LDAP_0_BIND_DN=cn=cas,dc=iamappliance
       # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap_cas.yaml
-      # - CAS_LDAP_0_DN_FORMAT=cn=%s,ou=users,dc=iam,dc=cz
+      # - CAS_LDAP_0_DN_FORMAT=uid=%s,ou=users,dc=iamappliance
       # - CAS_CONFIG=/etc/cas/config
       # - CAS_CUSTOM_FRONTEND=true
       # - CAS_CUSTOM_FRONTEND_TITLE=
@@ -56,12 +56,15 @@ services:
       #   source: ./ldap_cas.yaml
       #   target: run/secrets/ldap_cas.yaml
       #   read_only: true
-      # This is for the files related to SPNEGO authentication, i. e., the keytab, 
-      # krb5.conf, and login.conf.  
+      # This is for the files related to SPNEGO authentication, i. e., the keytab,
+      # krb5.conf, and login.conf.
       # - type: bind
       #   source: /data/volumes/cas/spnego
       #   target: /casstart/spnego
       #   read_only: true
-      - 'cas_services:/conf/cas/services'
-volumes:
-  cas_services:
+      # This directory holds service registrations for CAS. In practice, it is filled in by
+      # the CAS Management app
+      # - type: bind
+      #   source: ./services
+      #   target: /conf/cas/services
+      #   read_only: true

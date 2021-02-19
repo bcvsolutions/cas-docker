@@ -19,7 +19,7 @@ else
   sed -i "s#.*cas.server.name=.*#cas.server.name=$CAS_SERVER_NAME#" cas.properties;
 fi
 if [ -z "${CAS_SERVER_PREFIX}" ]; then
-  echo "[$0] CAS_SERVER_PREFIX not set, using default from the template.";
+  echo "[$0] CAS_SERVER_PREFIX not set, using default from the template '\${cas.server.name}/cas'.";
 else
   sed -i "s#.*cas.server.prefix=.*#cas.server.prefix=$CAS_SERVER_PREFIX#" cas.properties;
 fi
