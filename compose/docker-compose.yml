@@ -27,8 +27,8 @@ services:
       # - CAS_LDAP_0_USE_SSL=false
       # - CAS_LDAP_0_SUBTREE_SEARCH=true
       # - CAS_LDAP_0_BASE_DN=ou=users,dc=iamappliance
-      # - CAS_LDAP_0_SEARCH_FILTER=uid={user}
-      # - CAS_LDAP_0_BIND_DN=cn=cas,dc=iamappliance
+      # - CAS_LDAP_0_SEARCH_FILTER=(&(uid={user})(inetUserStatus=active))
+      # - CAS_LDAP_0_BIND_DN=cn=cn=cas,dc=iamappliance
       # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap_cas.yaml
       # - CAS_LDAP_0_DN_FORMAT=uid=%s,ou=users,dc=iamappliance
       # - CAS_CONFIG=/etc/cas/config
