@@ -44,6 +44,8 @@ After it is started up, you can navigate to http://yourserver:8080/cas. CAS itse
 
 ### Minimal mandatory parameters for deployments
 Those parameters have no defaults and when left unset, CAS will not start at all.
+- **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com`, property `cas.server.name` in `cas.properties`. **Default: not set**.
+- **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: not set**.
 
 ## Container startup and hooks
 Container start leverages existing hooks infrastructure as provided by the Tomcat baseimage - **run.sh**, **runOnce.sh**, **runEvery.sh**, **startTomcat.sh** and their respective **.d/** directories. For more information about runscripts structure, see Tomcat baseimage doc.
@@ -63,7 +65,7 @@ You can pass a number of environment variables into the container. All Tomcat ba
 If you need more to set more properties that defined here, they must be added to relevant scripts. A quick workaround
 is to mount the `cas.properties` file to `/etc/cas/config/cas.properties`.
 - **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com`, property `cas.server.name` in `cas.properties`. **Default: not set**.
-- **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: `${cas.server.name}/cas`**.
+- **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: not set**.
 - **CAS_SERVICES_REGISTRY_JSON_LOCATION** - The location of the JSON services definitions, property `cas.service-registry.json.location` in `cas.properties`. **Default: `/conf/cas/services`**.
 
 ### LDAP configuration
@@ -79,8 +81,10 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE** - The name of the file containing the password for the user account defined above, property in cas.properties `cas.authn.ldap[0].bindCredential`. Use `ldap.pwfile` and mount this file. **Default: 'not set'**.
 - **CAS_LDAP_0_DN_FORMAT** - Define the DN format, property in cas.properties `cas.authn.ldap[0].dn-format`. Recommended: 'cn=%s,ou=users,dc=iam,dc=cz'. **Default: 'not set'**.
 
-### CAS client configuration for CzechIdM
+### CAS client configuration
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties `cas.client.validator-type`. **Default: 'CAS30'**.
+
+### Service ticket behavior configuration
 - **CAS_TICKET_NUMBER_OF_USES** - Set the ticket expiration policy, property in cas.properties `cas.ticket.st.number-of-uses`. **Default: `25`**.
 - **CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS** - Allow logout redirects defined in services, property in cas.properties `cas.logout.follow-service-redirects`. **Default: `true`**.
 
