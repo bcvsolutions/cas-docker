@@ -4,8 +4,8 @@
 version: '3.2'
 
 services:
-  appserver:
-    image: bcv-cas:6.2.8-r0
+  cas:
+    image: bcv-cas:6.2.8.0-r0
     container_name: cas
     ports:
       - 8009:8009
@@ -28,7 +28,7 @@ services:
       # - CAS_LDAP_0_SUBTREE_SEARCH=true
       # - CAS_LDAP_0_BASE_DN=ou=users,dc=iamappliance
       # - CAS_LDAP_0_SEARCH_FILTER=(\&(uid={user})(iamUserStatus=active))
-      # - CAS_LDAP_0_BIND_DN=cn=cn=cas,dc=iamappliance
+      # - CAS_LDAP_0_BIND_DN=cn=cas,dc=iamappliance
       # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap_cas.yaml
       # - CAS_CONFIG=/etc/cas/config
       # - CAS_CUSTOM_FRONTEND=true
@@ -63,7 +63,7 @@ services:
       #   read_only: true
       # This directory holds service registrations for CAS. In practice, it is filled in by
       # the CAS Management app
-      # - type: bind
-      #   source: ./services
-      #   target: /conf/cas/services
-      #   read_only: true
+      - type: bind
+        source: ./services
+        target: /conf/cas/services
+        read_only: true
