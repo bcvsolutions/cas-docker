@@ -71,7 +71,7 @@ is to mount the `cas.properties` file to `/etc/cas/config/cas.properties`.
 ### LDAP configuration
 LDAP is used as the source of data about users by CAS. By default, all properties related to it are not set (commented out) because CAS **will not start if LDAP is defined but unavailable**.
 
-- **CAS_LDAP_0_TYPE** - The type of LDAP connection, property in cas.properties `cas.authn.ldap[0].type`. Recommended setting `DIRECT`. **Default: not set**.
+- **CAS_LDAP_0_TYPE** - The type of LDAP connection, property in cas.properties `cas.authn.ldap[0].type`. Recommended setting `AUTHENTICATED`. **Default: not set**.
 - **CAS_LDAP_0_LDAP_URL** - The LDAP URI in format: `ldap://openldap:389`, property in cas.properties `cas.authn.ldap[0].ldapUrl=`. **Default: 'not set'**.
 - **CAS_LDAP_0_USE_SSL** - Set whether SSL should be used or not for LDAP - if using port 389, set `false`, if 636, set `true`, property in cas.properties `cas.authn.ldap[0].usessl`. **Default: 'not set'**.
 - **CAS_LDAP_0_SUBTREE_SEARCH** - Set whether subtree search should be used, set to `true`, property in cas.properties `cas.authn.ldap[0].subtreeSearch`. **Default: 'not set'**.

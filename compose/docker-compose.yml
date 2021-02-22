@@ -22,7 +22,7 @@ services:
       # - CAS_SERVER_PREFIX=
       - CAS_SERVICES_REGISTRY_INIT_FROM_JSON=true
       # - CAS_SERVICES_REGISTRY_JSON_LOCATION=/conf/cas/services
-      # - CAS_LDAP_0_TYPE=DIRECT
+      # - CAS_LDAP_0_TYPE=AUTHENTICATED
       # - CAS_LDAP_0_LDAP_URL=ldap://directory-server:389
       # - CAS_LDAP_0_USE_SSL=false
       # - CAS_LDAP_0_SUBTREE_SEARCH=true
