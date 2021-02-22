@@ -1,0 +1,69 @@
+# More-elaborate example compose file for the CAS image.
+# In fact, not many parameters are truly mandatory - see README.md.
+# With this configuration, CAS will start regardless of any other service.
+version: '3.2'
+
+services:
+  cas:
+    image: bcv-cas:6.2.8.0-r0
+    container_name: cas
+    ports:
+      - 8009:8009
+      - 8080:8080
+    hostname: cas
+    environment:
+      - JAVA_XMS=768M
+      - JAVA_XMX=1024M
+      - TZ=Europe/Prague
+      - DOCKER_TOMCAT_ENABLE_AJP=
+      # - DOCKER_TOMCAT_DISABLE_ACCESS_LOG=
+      - DOCKER_SECURE_SECRETS=yes
+      - CAS_SERVER_NAME=
+      # - CAS_SERVER_PREFIX=
+      - CAS_SERVICES_REGISTRY_INIT_FROM_JSON=true
+      # - CAS_SERVICES_REGISTRY_JSON_LOCATION=/conf/cas/services
+      # - CAS_LDAP_0_TYPE=AUTHENTICATED
+      # - CAS_LDAP_0_LDAP_URL=ldap://directory-server:389
+      # - CAS_LDAP_0_USE_SSL=false
+      # - CAS_LDAP_0_SUBTREE_SEARCH=true
+      # - CAS_LDAP_0_BASE_DN=ou=users,dc=iamappliance
+      # - CAS_LDAP_0_SEARCH_FILTER=(\&(uid={user})(iamUserStatus=active))
+      # - CAS_LDAP_0_BIND_DN=cn=cas,dc=iamappliance
+      # - CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE=/run/secrets/ldap_cas.yaml
+      # - CAS_CONFIG=/etc/cas/config
+      # - CAS_CUSTOM_FRONTEND=true
+      # - CAS_CUSTOM_FRONTEND_TITLE=
+      # - CAS_CUSTOM_FRONTEND_FOOTER_TEXT=
+      # - CAS_CUSTOM_FRONTEND_FOOTER_LINK=
+      # - CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT=
+      # - CAS_CUSTOM_FRONTEND_LOGO_LINK=
+      # - CAS_SPNEGO_ENABLED=true
+      # - CAS_KERBEROS_REALM=
+      # - CAS_KERBEROS_DEBUG=false
+      # - CAS_KERBEROS_KDC=
+      # - CAS_KERBEROS_SERVICE_PRINCIPAL=
+    volumes:
+      #   This is for binding folder with PEM certificates to import into truststore.
+      #   It comes from bcv-tomcat baseimage.
+      # - type: bind
+      #   source: ./certs
+      #   target: /opt/tomcat/truststore/certs
+      #   read_only: true
+      # This file contains the password for the user CAS uses to read LDAP.
+      # The password must be a string surrounded by quotation marks ("password").
+      # - type: bind
+      #   source: ./ldap_cas.yaml
+      #   target: run/secrets/ldap_cas.yaml
+      #   read_only: true
+      # This is for the files related to SPNEGO authentication, i. e., the keytab,
+      # krb5.conf, and login.conf.
+      # - type: bind
+      #   source: /data/volumes/cas/spnego
+      #   target: /casstart/spnego
+      #   read_only: true
+      # This directory holds service registrations for CAS. In practice, it is filled in by
+      # the CAS Management app
+      - type: bind
+        source: ./services
+        target: /conf/cas/services
+        read_only: true
