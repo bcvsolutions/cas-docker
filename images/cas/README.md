@@ -79,7 +79,6 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_LDAP_0_SEARCH_FILTER** - Define the search filter, property in cas.properties `cas.authn.ldap[0].searchFilter`. Recommended `cn={user}`. **Default: 'not set'**.
 - **CAS_LDAP_0_BIND_DN** - The DN of the user CAS uses to read LDAP, property in cas.properties `cas.authn.ldap[0].bindDn`. **Default: 'not set'**.
 - **CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE** - The name of the file containing the password for the user account defined above, property in cas.properties `cas.authn.ldap[0].bindCredential`. Use `ldap.pwfile` and mount this file. **Default: 'not set'**.
-- **CAS_LDAP_0_DN_FORMAT** - Define the DN format, property in cas.properties `cas.authn.ldap[0].dn-format`. Recommended: 'cn=%s,ou=users,dc=iam,dc=cz'. **Default: 'not set'**.
 
 ### CAS client configuration
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties `cas.client.validator-type`. **Default: 'CAS30'**.

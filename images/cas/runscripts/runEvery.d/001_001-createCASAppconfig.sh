@@ -42,6 +42,7 @@ if [ -z "${CAS_LDAP_0_LDAP_URL}" ]; then
 else
   sed -i "s#.*cas.authn.ldap\[0\].ldapUrl=.*#cas.authn.ldap\[0\].ldapUrl=$CAS_LDAP_0_LDAP_URL#" cas.properties;
   sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].ldapUrl=.*#cas.authn.attribute-repository.ldap\[0\].ldapUrl=$CAS_LDAP_0_LDAP_URL#" cas.properties;
+  sed -i "s#.*cas.authn.ldap\[0\].principalAttributeList=.*#cas.authn.ldap[0].principalAttributeList=mobile,givenName,mail,sn,uid,iamUserStatus,cn#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_USE_SSL}" ]; then
@@ -67,8 +68,8 @@ fi
 if [ -z "${CAS_LDAP_0_SEARCH_FILTER}" ]; then
   echo "[$0] CAS_LDAP_0_SEARCH_FILTER not set, using default from the template - EMPTY!!!.";
 else
-  sed -i "s#.*cas.authn.ldap\[0\].searchFilter=.*#cas.authn.ldap\[0\].searchFilter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
-  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].searchFilter=.*#cas.authn.attribute-repository.ldap\[0\].searchFilter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
+  sed -i "s#.*cas.authn.ldap\[0\].search-filter=.*#cas.authn.ldap\[0\].search-filter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
+  sed -i "s#.*cas.authn.attribute-repository.ldap\[0\].search-filter=.*#cas.authn.attribute-repository.ldap\[0\].search-filter=$CAS_LDAP_0_SEARCH_FILTER#" cas.properties;
 fi
 
 if [ -z "${CAS_LDAP_0_BIND_DN}" ]; then
@@ -88,12 +89,6 @@ else
   else
     echo "[$0] CAS_LDAP_0_BIND_CREDENTIAL_PASSFILE not readable, using default password from the template - EMPTY!!!.";
   fi
-fi
-
-if [ -z "${CAS_LDAP_0_DN_FORMAT}" ]; then
-  echo "[$0] CAS_LDAP_0_DN_FORMAT not set, using default from the template - EMPTY!!!.";
-else
-  sed -i "s#.*cas.authn.ldap\[0\].dn-format=.*#cas.authn.ldap\[0\].dn-format=$CAS_LDAP_0_DN_FORMAT#" cas.properties;
 fi
 
 # CAS CLIENT CONFIG
