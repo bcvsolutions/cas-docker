@@ -99,16 +99,36 @@ else
   sed -i "s#.*cas.client.validator-type=.*#cas.client.validator-type=$CAS_CLIENT_VALIDATOR_TYPE#" cas.properties;
 fi
 
+if [ -z "${CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS}" ]; then
+  echo "[$0] CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS not set, using default from the template 'true'.";
+else
+  sed -i "s#.*cas.logout.follow-service-redirects=.*#cas.logout.follow-service-redirects=$CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTs#" cas.properties;
+fi
+
+# CAS TICKET TIMEOUT CONFIG
+
+if [ -z "${CAS_TGT_IDLE_TIMEOUT}" ]; then
+  echo "[$0] CAS_TGT_IDLE_TIMEOUT not set, using default from the template '28800'.";
+else
+  sed -i "s#.*cas.ticket.tgt.timeout.max-time-to-live-in-seconds=.*#cas.ticket.tgt.timeout.max-time-to-live-in-seconds=$CAS_TGT_IDLE_TIMEOUT#" cas.properties;
+fi
+
+if [ -z "${CAS_TGT_HARD_TIMEOUT}" ]; then
+  echo "[$0] CAS_TGT_HARD_TIMEOUT not set, using default from the template '43200'.";
+else
+  sed -i "s#.*cas.ticket.tgt.hard-timeout.time-to-kill-in-seconds=.*#cas.ticket.tgt.hard-timeout.time-to-kill-in-seconds=$CAS_TGT_HARD_TIMEOUT#" cas.properties;
+fi
+
 if [ -z "${CAS_TICKET_NUMBER_OF_USES}" ]; then
   echo "[$0] CAS_TICKET_NUMBER_OF_USES not set, using default from the template '25'.";
 else
   sed -i "s#.*cas.ticket.st.number-of-uses=.*#cas.ticket.st.number-of-uses=$CAS_TICKET_NUMBER_OF_USES#" cas.properties;
 fi
 
-if [ -z "${CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS}" ]; then
-  echo "[$0] CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS not set, using default from the template 'true'.";
+if [ -z "${CAS_ST_HARD_TIMEOUT}" ]; then
+  echo "[$0] CAS_ST_HARD_TIMEOUT not set, using default from the template '900'.";
 else
-  sed -i "s#.*cas.logout.follow-service-redirects=.*#cas.logout.follow-service-redirects=$CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTs#" cas.properties;
+  sed -i "s#.*cas.ticket.st.time-to-kill-in-seconds=.*#cas.ticket.st.time-to-kill-in-seconds=$CAS_ST_HARD_TIMEOUT#" cas.properties;
 fi
 
 # CUSTOM FRONTED CHANGES

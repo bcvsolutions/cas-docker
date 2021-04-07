@@ -83,8 +83,11 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 ### CAS client configuration
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties `cas.client.validator-type`. **Default: 'CAS30'**.
 
-### Service ticket behavior configuration
-- **CAS_TICKET_NUMBER_OF_USES** - Set the ticket expiration policy, property in cas.properties `cas.ticket.st.number-of-uses`. **Default: `25`**.
+### Ticket granting ticket and Service ticket behavior configuration
+- **CAS_TGT_IDLE_TIMEOUT** - Set the ticket granting ticket idle timeout in seconds (ticket's validity will be extended if used), property in cas.properties `cas.ticket.tgt.timeout.max-time-to-live-in-seconds`. **Default: `28800`**.
+- **CAS_TGT_HARD_TIMEOUT** - Set the ticket granting ticket hard timeout in seconds (ticket will be expired after this time), property in cas.properties `cas.ticket.tgt.hard-timeout.time-to-kill-in-seconds`. **Default: `43200`**.
+- **CAS_TICKET_NUMBER_OF_USES** - Set the default service ticket expiration policy (how many times a ticket can be used before becoming invalid), property in cas.properties `cas.ticket.st.number-of-uses`. **Default: `25`**.
+- **CAS_ST_HARD_TIMEOUT** - Set the default service ticket expiration timeout in seconds, property in cas.properties `cas.ticket.st.time-to-kill-in-seconds`. **Default: `900`**.
 - **CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS** - Allow logout redirects defined in services, property in cas.properties `cas.logout.follow-service-redirects`. **Default: `true`**.
 
 ### Custom frontend changes
