@@ -94,6 +94,8 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINK** - Set the URL of the link shown in the footer, property in cas.properties `cas.custom.frontend.footer-link`. **Default: `https://www.bcvsolutions.eu`**.
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT** - Set the text of the link shown in the footer, property in cas.properties `cas.custom.frontend.footer-linktext`. **Default: `BCV solutions`**.
 - **CAS_CUSTOM_FRONTEND_LOGO_LINK** - Set the URL of the logo, property in cas.properties `cas.custom.frontend.logolink`. **Default: `https://www.bcvsolutions.eu`**.
+- **CAS_CUSTOM_FRONTEND_PASSWORDRESET_DISPLAY** - Set whether password reset link will appear bellow login form, property in cas.properties `cas.custom.frontend.passwordReset.display`. **Default: `false`**.
+
 
 ### SPNEGO authentication
 - **CAS_SPNEGO_ENABLED** - Set SPNEGO should be enabled. This will set some static properties necessary for SPNEGO to work. **Default: `false`**.
