@@ -42,6 +42,11 @@ services:
       # - CAS_KERBEROS_DEBUG=false
       # - CAS_KERBEROS_KDC=
       # - CAS_KERBEROS_SERVICE_PRINCIPAL=
+      # - CAS_TGT_IDLE_TIMEOUT=
+      # - CAS_TGT_HARD_TIMEOUT=
+      # - CAS_TICKET_NUMBER_OF_USES=
+      # - CAS_ST_HARD_TIMEOUT=
+
     volumes:
       #   This is for binding folder with PEM certificates to import into truststore.
       #   It comes from bcv-tomcat baseimage.
