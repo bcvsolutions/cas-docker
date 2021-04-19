@@ -98,7 +98,7 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT** - Set the text of the link shown in the footer, property in cas.properties `cas.custom.frontend.footer-linktext`. **Default: `BCV solutions`**.
 - **CAS_CUSTOM_FRONTEND_LOGO_LINK** - Set the URL of the logo, property in cas.properties `cas.custom.frontend.logolink`. **Default: `https://www.bcvsolutions.eu`**.
 - **CAS_CUSTOM_FRONTEND_PASSWORDRESET_DISPLAY** - Set whether password reset link will appear bellow login form, property in cas.properties `cas.custom.frontend.passwordReset.display`. **Default: `false`**.
-- **CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK** - Set relative(/link), domain relative (\~/link) or full url(with http) link `cas.custom.frontend.passwordReset.link`. **Default: not set**.
+- **CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK** - Set relative(/link), domain relative (\~/link) or full url(with http) link `cas.custom.frontend.passwordReset.link`. **Default: not set**. If value is not set, there will be fallback for default value in CAS template, server.url/passwordForgot
 
 
 ### SPNEGO authentication
