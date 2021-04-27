@@ -174,6 +174,12 @@ else
   sed -i "s#.*cas.custom.frontend.passwordReset.display=.*#cas.custom.frontend.passwordReset.display=$CAS_CUSTOM_FRONTEND_PASSWORDRESET_DISPLAY#" cas.properties;
 fi
 
+if [ -z "${CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK}" ]; then
+  echo "[$0] CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK not set, using default from the template - EMPTY!!!";
+else
+  sed -i "s#.*cas.custom.frontend.passwordReset.link=.*#cas.custom.frontend.passwordReset.link=$CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK#" cas.properties;
+fi
+
 # AD SSO CONFIG
 if [ -z "${CAS_KERBEROS_DEBUG}" ]; then
   # if no kerberos debug var is set, set it to false
