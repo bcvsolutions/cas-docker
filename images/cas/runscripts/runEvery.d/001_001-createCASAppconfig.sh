@@ -24,6 +24,13 @@ else
   sed -i "s#.*cas.server.prefix=.*#cas.server.prefix=$CAS_SERVER_PREFIX#" cas.properties;
 fi
 
+# CAS LOGGING LEVEL
+if [ -z "${CAS_LOGGING_LEVEL}" ]; then
+  echo "[$0] CAS_LOGGING_LEVEL not set, using default from the template - INFO.";
+else
+  sed -i "s#.*logging.level.org.apereo.cas=.*#logging.level.org.apereo.cas=$CAS_LOGGING_LEVEL#" cas.properties;
+fi
+
 if [ -z "${CAS_SERVICES_REGISTRY_JSON_LOCATION}" ]; then
   echo "[$0] CAS_SERVICES_REGISTRY_JSON_LOCATION not set, using default from the template '/conf/cas/services'.";
 else
