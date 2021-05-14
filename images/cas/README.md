@@ -67,6 +67,7 @@ is to mount the `cas.properties` file to `/etc/cas/config/cas.properties`.
 - **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com`, property `cas.server.name` in `cas.properties`. **Default: not set**.
 - **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: not set**.
 - **CAS_SERVICES_REGISTRY_JSON_LOCATION** - The location of the JSON services definitions, property `cas.service-registry.json.location` in `cas.properties`. **Default: `/conf/cas/services`**.
+- **CAS_LOGGING_LEVEL** - The global logging level for CAS, use either `INFO` or `DEBUG`, property `logging.level.org.apereo.cas` in `cas.properties`. Only use `DEBUG` temporarily, after you solve your problem, set the value back to `INFO`. **Default: 'INFO'**.
 
 ### LDAP configuration
 LDAP is used as the source of data about users by CAS. By default, all properties related to it are not set (commented out) because CAS **will not start if LDAP is defined but unavailable**.
