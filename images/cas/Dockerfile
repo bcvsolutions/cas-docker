@@ -1,6 +1,6 @@
-FROM bcv-tomcat:9.0.41-r0
+FROM repo.iamappliance.com:8443/bcv-tomcat:9.0.41-r1
 
-ENV CAS_VERSION 6.2.8.0
+ENV CAS_VERSION 6.2.8.1
 
 ENV TOMCAT_BASE /opt/tomcat/current/
 ENV CAS_BASE /etc/cas/
