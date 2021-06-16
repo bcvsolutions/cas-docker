@@ -67,6 +67,7 @@ is to mount the `cas.properties` file to `/etc/cas/config/cas.properties`.
 - **CAS_SERVER_NAME** - The hostname of the CAS server, e. g., `https://company.com`, property `cas.server.name` in `cas.properties`. **Default: not set**.
 - **CAS_SERVER_PREFIX** - The actual link at which CAS is available, e. g., `https://company.com/cas` (property `cas.server.prefix` in `cas.properties`). **Default: not set**.
 - **CAS_SERVICES_REGISTRY_JSON_LOCATION** - The location of the JSON services definitions, property `cas.service-registry.json.location` in `cas.properties`. **Default: `/conf/cas/services`**.
+- **CAS_LOGGING_LEVEL** - The global logging level for CAS, use either `INFO` or `DEBUG`, property `logging.level.org.apereo.cas` in `cas.properties`. Only use `DEBUG` temporarily, after you solve your problem, set the value back to `INFO`. **Default: 'INFO'**.
 
 ### LDAP configuration
 LDAP is used as the source of data about users by CAS. By default, all properties related to it are not set (commented out) because CAS **will not start if LDAP is defined but unavailable**.
@@ -83,8 +84,11 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 ### CAS client configuration
 - **CAS_CLIENT_VALIDATOR_TYPE** - Set the type of validator used by CAS client, property in cas.properties `cas.client.validator-type`. **Default: 'CAS30'**.
 
-### Service ticket behavior configuration
-- **CAS_TICKET_NUMBER_OF_USES** - Set the ticket expiration policy, property in cas.properties `cas.ticket.st.number-of-uses`. **Default: `25`**.
+### Ticket granting ticket and Service ticket behavior configuration
+- **CAS_TGT_IDLE_TIMEOUT** - Set the ticket granting ticket idle timeout in seconds (ticket's validity will be extended if used), property in cas.properties `cas.ticket.tgt.timeout.max-time-to-live-in-seconds`. **Default: `28800 (8 hours)`**.
+- **CAS_TGT_HARD_TIMEOUT** - Set the ticket granting ticket hard timeout in seconds (ticket will be expired after this time), property in cas.properties `cas.ticket.tgt.hard-timeout.time-to-kill-in-seconds`. **Default: `43200 (12 hours)`**.
+- **CAS_TICKET_NUMBER_OF_USES** - Set the default service ticket expiration policy (how many times a ticket can be used before becoming invalid), property in cas.properties `cas.ticket.st.number-of-uses`. **Default: `25`**.
+- **CAS_ST_HARD_TIMEOUT** - Set the default service ticket expiration timeout in seconds, property in cas.properties `cas.ticket.st.time-to-kill-in-seconds`. **Default: `900 (15 minutes)`**.
 - **CAS_LOGOUT_FOLLOW_SERVICE_REDIRECTS** - Allow logout redirects defined in services, property in cas.properties `cas.logout.follow-service-redirects`. **Default: `true`**.
 
 ### Custom frontend changes
@@ -94,6 +98,9 @@ LDAP is used as the source of data about users by CAS. By default, all propertie
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINK** - Set the URL of the link shown in the footer, property in cas.properties `cas.custom.frontend.footer-link`. **Default: `https://www.bcvsolutions.eu`**.
 - **CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT** - Set the text of the link shown in the footer, property in cas.properties `cas.custom.frontend.footer-linktext`. **Default: `BCV solutions`**.
 - **CAS_CUSTOM_FRONTEND_LOGO_LINK** - Set the URL of the logo, property in cas.properties `cas.custom.frontend.logolink`. **Default: `https://www.bcvsolutions.eu`**.
+- **CAS_CUSTOM_FRONTEND_PASSWORDRESET_DISPLAY** - Set whether password reset link will appear bellow login form, property in cas.properties `cas.custom.frontend.passwordReset.display`. **Default: `false`**.
+- **CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK** - Set relative(/link), domain relative (\~/link) or full url(with http) link `cas.custom.frontend.passwordReset.link`. **Default: not set**. If value is not set, there will be fallback for default value in CAS template, server.url/passwordForgot
+
 
 ### SPNEGO authentication
 - **CAS_SPNEGO_ENABLED** - Set SPNEGO should be enabled. This will set some static properties necessary for SPNEGO to work. **Default: `false`**.

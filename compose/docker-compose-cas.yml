@@ -5,7 +5,7 @@ version: '3.2'
 
 services:
   cas:
-    image: bcv-cas:6.2.8.0-r0
+    image: bcv-cas:6.2.8.1-r0
     container_name: cas
     ports:
       - 8009:8009
@@ -37,11 +37,18 @@ services:
       # - CAS_CUSTOM_FRONTEND_FOOTER_LINK=
       # - CAS_CUSTOM_FRONTEND_FOOTER_LINKTEXT=
       # - CAS_CUSTOM_FRONTEND_LOGO_LINK=
+      # - CAS_CUSTOM_FRONTEND_PASSWORDRESET_DISPLAY=
+      # - CAS_CUSTOM_FRONTEND_PASSWORDRESET_LINK=
       # - CAS_SPNEGO_ENABLED=true
       # - CAS_KERBEROS_REALM=
       # - CAS_KERBEROS_DEBUG=false
       # - CAS_KERBEROS_KDC=
       # - CAS_KERBEROS_SERVICE_PRINCIPAL=
+      # - CAS_TGT_IDLE_TIMEOUT=
+      # - CAS_TGT_HARD_TIMEOUT=
+      # - CAS_TICKET_NUMBER_OF_USES=
+      # - CAS_ST_HARD_TIMEOUT=
+
     volumes:
       #   This is for binding folder with PEM certificates to import into truststore.
       #   It comes from bcv-tomcat baseimage.
